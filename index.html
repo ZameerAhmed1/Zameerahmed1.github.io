@@ -373,11 +373,12 @@
             <h2 class="section-title">Contact</h2>
 
             <div class="contact__container bd-grid">
-                <form method='POST' action="https://formspree.io/f/xgerpozp" class="contact__form">
+                <form method='POST' action="https://formspree.io/f/mdoypvkl" class="contact__form" id="my-form">
                     <input type="text" placeholder="Name" class="contact__input">
                     <input type="mail" placeholder="Email" class="contact__input">
                     <textarea name="" id="" cols="0" rows="10" class="contact__input"></textarea>
                     <input type="button" value="submit" class="contact__button button">
+                    <p id="my-form-status"></p>
                 </form>
             </div>
         </section>
@@ -400,6 +401,30 @@
 
     <!--===== MAIN JS =====-->
     <script src="assets/js/main.js"></script>
+      
+    <!--===== Redirect JS =====-->
+    <script>
+        var form = document.getElementById("my-form");
+        
+        async function handleSubmit(event) {
+          event.preventDefault();
+          var status = document.getElementById("my-form-status");
+          var data = new FormData(event.target);
+          fetch(event.target.action, {
+            method: form.method,
+            body: data,
+            headers: {
+                'Accept': 'application/json'
+            }
+          }).then(response => {
+            status.innerHTML = "Thanks for your submission!";
+            form.reset()
+          }).catch(error => {
+            status.innerHTML = "Oops! There was a problem submitting your form"
+          });
+        }
+        form.addEventListener("submit", handleSubmit)
+    </script>
 </body>
 
 >>>>>>> 6a56f337ebfa1057e981c88722438c088521d5c6
